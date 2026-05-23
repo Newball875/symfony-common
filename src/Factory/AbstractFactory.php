@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Classe qui établit les règles d'une factory entre une entité et un DTO
  * @template T_Value
+ * @method EntityDTO toDTO($entity, mixed ...$kwargs)
  */
 abstract class AbstractFactory {
 	/**
