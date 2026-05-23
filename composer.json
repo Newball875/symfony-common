@@ -1,5 +1,5 @@
 {
-	"name": "newball/common",
+	"name": "newball875/common",
 	"type": "symfony-bundle",
 	"require": {
 		"php": ">=8.4",
