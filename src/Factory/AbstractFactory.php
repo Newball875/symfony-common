@@ -8,19 +8,22 @@ use Doctrine\Common\Collections\Collection;
 
 /**
  * Classe qui établit les règles d'une factory entre une entité et un DTO
+ * @template T_Value
  */
 abstract class AbstractFactory {
 	/**
-	 * @param $entity
+	 * @param T_Value $entity Entité à passer sous DTO
+	 * @param mixed ...$kwargs Paramètres optionnels
 	 * @return EntityDTO
 	 */
-	static abstract public function toDTO($entity): EntityDTO;
+	static abstract public function toDTO(mixed $entity, ...$kwargs): EntityDTO;
 
 	/**
-	 * @param iterable $entities
+	 * @param iterable<T_Value> $entities Entités à passer sous DTO
+	 * @param mixed ...$kwargs Paramètres optionnels
 	 * @return EntityDTO[]
 	 */
-	static public function allToDTO(iterable $entities): array {
+	static public function allToDTO(iterable $entities, ...$kwargs): array {
 		if($entities instanceof Collection) {
 			return static::mapFromCollection($entities);
 		}
@@ -36,14 +39,14 @@ abstract class AbstractFactory {
 		return $dtos;
 	}
 
-	static private function mapFromArray(array $entities): array {
+	static private function mapFromArray(array $entities, ...$kwargs): array {
 		return array_map(
-			fn($entity) => static::toDTO($entity),
+			fn($entity) => static::toDTO($entity, ...$kwargs),
 			$entities
 		);
 	}
 
-	static private function mapFromCollection(Collection $collection): array{
-		return $collection->map(fn($entity) => static::toDTO($entity))->getValues();
+	static private function mapFromCollection(Collection $collection, ...$kwargs): array{
+		return $collection->map(fn($entity) => static::toDTO($entity, ...$kwargs))->getValues();
 	}
 }
