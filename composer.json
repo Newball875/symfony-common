@@ -1,6 +1,7 @@
 {
 	"name": "newball875/common",
 	"type": "symfony-bundle",
+	"license": "CC-BY-ND-4.0",
 	"require": {
 		"php": ">=8.4",
 		"symfony/http-kernel": "^7.0|^8.0",
