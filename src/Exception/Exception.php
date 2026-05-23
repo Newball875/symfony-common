@@ -65,4 +65,46 @@ class Exception extends PHPException {
 	):self{
 		return new self($message, $http_code, $app_code);
 	}
+
+	/**
+	 * Fichier d'image non trouvé
+	 * @param string $message
+	 * @param int $http_code
+	 * @param ExceptionCode $app_code
+	 */
+	public static function noImage(
+		string $message = "Image non trouvée",
+		int $http_code = 404,
+		ExceptionCode $app_code = ExceptionCode::NO_IMAGE
+	):self{
+		return new self($message, $http_code, $app_code);
+	}
+
+	/**
+	 * Aucun fichier présent sur le chemin fourni
+	 * @param string $message
+	 * @param int $http_code
+	 * @param ExceptionCode $app_code
+	 */
+	public static function noFile(
+		string $message = "Aucun fichier",
+		int $http_code = 404,
+		ExceptionCode $app_code = ExceptionCode::NO_FILE
+	):self{
+		return new self($message, $http_code, $app_code);
+	}
+
+	/**
+	 * Fichier non lisible
+	 * @param string $message
+	 * @param int $http_code
+	 * @param ExceptionCode $app_code
+	 */
+	public static function fileNotReadable(
+		string $message = "Fichier illisible",
+		int $http_code = 403,
+		ExceptionCode $app_code = ExceptionCode::UNREADABLE_FILE
+	):self{
+		return new self($message, $http_code, $app_code);
+	}
 }
