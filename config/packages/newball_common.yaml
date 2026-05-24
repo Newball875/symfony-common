@@ -1,0 +1,3 @@
+newball_common:
+    header_status: "%env(TOKEN_STATUS)%"
+    header_id: "%env(TOKEN_ID)%"

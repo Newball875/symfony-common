@@ -8,6 +8,7 @@ use Newball\Common\Service\ApiReponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractController extends SymfonyController {
 	/**
@@ -51,5 +52,9 @@ abstract class AbstractController extends SymfonyController {
 	 */
 	protected function successAudio(string $file, int $code = 200): Response{
 		return ApiReponse::audio($file, $code);
+	}
+
+	protected function getUserId(Request $req): ?int{
+
 	}
 }
