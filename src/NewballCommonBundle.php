@@ -33,4 +33,11 @@ class NewballCommonBundle extends AbstractBundle {
 				->arg('$tokenStatus', $config["header_status"])
 				->arg('$tokenId', $config["header_user_id"]);
 	}
+
+	public function prependExtension(ContainerConfigurator $configurator, ContainerBuilder $builder): void {
+		$builder->prependExtensionConfig("newball_common", [
+			"header_status" => "%env(TOKEN_STATUS)%",
+			"header_user_id" => "%env(TOKEN_ID)%"
+		]);
+	}
 }
