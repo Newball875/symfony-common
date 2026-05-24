@@ -39,6 +39,20 @@ class Exception extends PHPException {
 	}
 
 	/**
+	 * Données manquantes dans les headers
+	 * @param string $message
+	 * @param int $http_code
+	 * @param ExceptionCode $app_code
+	 */
+	public static function noDataHeader(
+		string $message = "Données manquantes dans les headers",
+		int $http_code = 400,
+		ExceptionCode $app_code = ExceptionCode::HEADER_DATA
+	):self{
+		return new self($message, $http_code, $app_code);
+	}
+
+	/**
 	 * Entité non trouvable à cet id
 	 * @param string $message
 	 * @param int $http_code

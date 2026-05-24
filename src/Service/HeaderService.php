@@ -2,6 +2,8 @@
 
 namespace Newball\Common\Service;
 
+use Newball\Common\Exception\Exception;
+
 use Symfony\Component\HttpFoundation\Request;
 
 class HeaderService {
@@ -19,6 +21,14 @@ class HeaderService {
 			return intval($id);
 		}
 		return null;
+	}
+
+	public function getForceId(Request $request): int{
+		$id = $this->getId($request);
+		if($id == null){
+			throw Exception::noDataHeader("Id de l'utilisateur manquant dans les headers");
+		}
+		return $id;
 	}
 
 	public function isStatusOk(Request $request): bool{

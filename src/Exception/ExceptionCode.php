@@ -46,7 +46,7 @@ enum ExceptionCode : int {
 	/// CODES 2XX : MAUVAIS ENVOI DE DONNÉES ///
 
 	/**
-	 * Erreur de données fournies incomplètes
+	 * Erreur de données fournies dans le body incomplètes
 	 */
 	case POST_DATA = 201;
 
@@ -69,6 +69,11 @@ enum ExceptionCode : int {
 	 * Nom déjà pris
 	 */
 	case ALREADY_TAKEN = 205;
+
+	/**
+	 * Erreur de données fournies dans les headers incomplètes
+	 */
+	case HEADER_DATA = 206;
 
 	/// CODES 3XX : ERREUR FICHIER ///
 
