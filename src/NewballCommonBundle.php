@@ -30,10 +30,6 @@ class NewballCommonBundle extends AbstractBundle {
 			->set(HeaderService::class)
 				->autowire()
 				->autoconfigure()
-				/*->args([
-					['$tokenStatus', $config["header_status"]],
-					['$tokenId', $config["header_user_id"]],
-				]);*/
 				->arg('$tokenStatus', $config["header_status"])
 				->arg('$tokenId', $config["header_user_id"]);
 	}
