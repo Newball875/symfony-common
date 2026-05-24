@@ -2,6 +2,7 @@
 
 namespace Newball\Common;
 
+use Newball\Common\EventListener\ExceptionListener;
 use Newball\Common\Service\HeaderService;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -31,7 +32,10 @@ class NewballCommonBundle extends AbstractBundle {
 				->autowire()
 				->autoconfigure()
 				->arg('$tokenStatus', $config["header_status"])
-				->arg('$tokenId', $config["header_user_id"]);
+				->arg('$tokenId', $config["header_user_id"])
+			->set(ExceptionListener::class)
+			->autowire()
+			->autoconfigure();
 	}
 
 	public function prependExtension(ContainerConfigurator $configurator, ContainerBuilder $builder): void {
