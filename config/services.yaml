@@ -14,5 +14,7 @@ services:
             $exposes: "%cors_exposes%"
             $credentials: "%cors_credentials%"
 
-        Newball\Common\Service\: ~
-        Newball\Common\EventListener\: ~
+    Newball\Common\Service\:
+        resource: "../src/Service/"
+    Newball\Common\EventListener\:
+        resource: "../src/EventListener"
