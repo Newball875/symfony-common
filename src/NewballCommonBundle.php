@@ -28,6 +28,31 @@ class NewballCommonBundle extends AbstractBundle {
 					->defaultValue(true)
 					->info("Active ou non la partie CORS de NewballCommon")
 				->end()
+
+				->scalarNode("cors_origins")
+					->defaultValue("")
+					->info("Liste des origins, séparées par une virgule sans espace, autorisées.")
+				->end()
+
+				->scalarNode("cors_methods")
+					->defaultValue("GET,POST,PUT,PATCH,DELETE,OPTIONS")
+					->info("Liste des methods, séparées par une virgule sans espace, autorisées.")
+				->end()
+
+				->scalarNode("cors_headers")
+					->defaultValue("Accept,Content-Type,Range,Authorization")
+					->info("Liste des headers, séparés par une virgule sans espace, autorisés. Prend automatiquement en compte les headers personnalisés")
+				->end()
+
+				->scalarNode("cors_exposes")
+					->defaultValue("Content-Name,Content-Type,Content-Range")
+					->info("Liste des headers, séparés par une virgule sans espace, autorisés.")
+				->end()
+
+				->scalarNode("cors_credentials")
+					->defaultValue(false)
+					->info("Active ou non les credentials, les cookies.")
+				->end()
 			->end()
 		->end();
 	}
