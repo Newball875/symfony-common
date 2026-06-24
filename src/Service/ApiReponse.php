@@ -100,4 +100,8 @@ final class ApiReponse {
 			"Content-Disposition" => "inline; filename=\"".basename($file)."\""
 		]);
 	}
+
+	static public function cors(): Response{
+		return new Response("", Response::HTTP_NO_CONTENT);
+	}
 }

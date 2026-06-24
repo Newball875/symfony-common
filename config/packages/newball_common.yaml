@@ -1,3 +1,12 @@
 newball_common:
-    header_status: "%env(TOKEN_STATUS)%"
-    header_user_id: "%env(TOKEN_ID)%"
+    header_status: "%env(NB_COMMON_TOKEN_STATUS)%"
+    header_user_id: "%env(NB_COMMON_TOKEN_ID)%"
+    header_name: "%env(NB_COMMON_TOKEN_NAME)"
+
+    cors_origins: "%env(NB_COMMON_CORS_ORIGINS)%"
+    cors_methods: "%env(NB_COMMON_CORS_METHODS)%"
+    cors_headers: "%env(NB_COMMON_CORS_HEADERS)%"
+    # Header Expose headers
+    cors_exposes: "%env(NB_COMMON_CORS_EXPOSE)%"
+    cors_credentials: "%env(NB_COMMON_CORS_CREDENTIALS)%"
+
