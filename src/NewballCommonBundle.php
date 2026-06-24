@@ -2,6 +2,7 @@
 
 namespace Newball\Common;
 
+use Newball\Common\EventListener\CorsListener;
 use Newball\Common\EventListener\ExceptionListener;
 use Newball\Common\Service\HeaderService;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
@@ -34,8 +35,18 @@ class NewballCommonBundle extends AbstractBundle {
 				->arg('$tokenStatus', $config["header_status"])
 				->arg('$tokenId', $config["header_user_id"])
 			->set(ExceptionListener::class)
-			->autowire()
-			->autoconfigure();
+				->autowire()
+				->autoconfigure()
+			->set(CorsListener::class)
+				->autowire()
+				->autoconfigure()
+				->arg('$isActive', $config["cors_active"])
+				->arg('$origins', $config["cors_origins"])
+				->arg('$methods', $config["cors_methods"])
+				->arg('$headers', $config["cors_headers"])
+				->arg('$exposes', $config["cors_exposes"])
+				->arg('$credentials', $config["cors_credentials"])
+		;
 	}
 
 	public function prependExtension(ContainerConfigurator $configurator, ContainerBuilder $builder): void {
