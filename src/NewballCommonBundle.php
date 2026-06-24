@@ -68,32 +68,4 @@ class NewballCommonBundle extends AbstractBundle {
 
 		$configurator->import("../config/services.yaml");
 	}
-
-	/*public function loadExtension(array $config, ContainerConfigurator $configurator, ContainerBuilder $builder): void {
-		$configurator->services()
-			->set(HeaderService::class)
-				->autowire()
-				->autoconfigure()
-				->arg('$tokenStatus', $config["header_status"])
-				->arg('$tokenId', $config["header_user_id"])
-			->set(ExceptionListener::class)
-				->autowire()
-				->autoconfigure()
-			->set(CorsListener::class)
-				->autowire()
-				->autoconfigure()
-				->arg('$isActive', $config["cors_active"])
-				->arg('$origins', $config["cors_origins"])
-				->arg('$methods', $config["cors_methods"])
-				->arg('$headers', $config["cors_headers"])
-				->arg('$exposes', $config["cors_exposes"])
-				->arg('$credentials', $config["cors_credentials"])
-
-				->arg('$tokenName', $config["header_name"])
-				->arg('$tokenStatus', $config["header_status"])
-				->arg('$tokenId', $config["header_user_id"])
-			->autowire()
-			->autoconfigure()
-		;
-	}*/
 }
