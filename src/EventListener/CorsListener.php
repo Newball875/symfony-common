@@ -64,7 +64,7 @@ readonly final class CorsListener implements EventSubscriberInterface {
 		$origin = $req->headers->get("Origin");
 
 		if($req->getMethod() == "OPTIONS" && $this->isOriginAllowed($origin)){
-			$event->setResponse(ApiReponse::cors($this->origins, $this->methods, $this->headers));
+			$event->setResponse(ApiReponse::cors($this->origins, $this->methods, $this->headers, $this->exposes));
 		}
 	}
 	#[AsEventListener(event: KernelEvents::RESPONSE)]

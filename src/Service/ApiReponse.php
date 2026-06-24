@@ -103,16 +103,18 @@ final class ApiReponse {
 
 	/**
 	 * Fonction qui génère une réponse pour les CORS avec tous les headers nécessaires
-	 * @param string $origins
-	 * @param string $methods
-	 * @param string $headers
+	 * @param array $origins
+	 * @param array $methods
+	 * @param array $headers
+	 * @param array $exposes
 	 * @return Response
 	 */
-	static public function cors(array $origins, array $methods, array $headers): Response{
+	static public function cors(array $origins, array $methods, array $headers, array $exposes): Response{
 		return new JsonResponse("", Response::HTTP_NO_CONTENT, [
 			"Access-Control-Allow-Origin" => $origins,
 			"Access-Control-Allow-Methods" => $methods,
-			"Access-Control-Allow-Headers" => $headers
+			"Access-Control-Allow-Headers" => $headers,
+			"Access-Control-Expose-Headers" => $exposes,
 		]);
 	}
 }
