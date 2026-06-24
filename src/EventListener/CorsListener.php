@@ -2,6 +2,7 @@
 
 namespace Newball\Common\EventListener;
 
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -49,6 +50,7 @@ readonly final class CorsListener implements EventSubscriberInterface {
 		return in_array($origin, $this->getOrigins(), true);
 	}
 
+	#[AsEventListener(event: KernelEvents::REQUEST)]
 	public function onKernelRequest(RequestEvent $event): void {
 		if(!$event->isMainRequest() || !$this->isActive) return;
 
@@ -66,7 +68,7 @@ readonly final class CorsListener implements EventSubscriberInterface {
 			$event->setResponse($reponse);
 		}
 	}
-
+	#[AsEventListener(event: KernelEvents::RESPONSE)]
 	public function onKernelResponse(ResponseEvent $event): void {
 		if(!$this->isActive) return;
 
