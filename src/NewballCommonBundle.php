@@ -56,7 +56,23 @@ class NewballCommonBundle extends AbstractBundle {
 		->end();
 	}
 
-	public function loadExtension(array $config, ContainerConfigurator $configurator, ContainerBuilder $builder): void {
+	public function loadExtension(array $config, ContainerConfigurator $configurator, ContainerBuilder $container): void {
+		$configurator->parameters()
+			->set("header_name", $config["header_name"])
+			->set("header_status", $config["header_status"])
+			->set("header_user_id", $config["header_user_id"])
+			->set("cors_active", $config["cors_active"])
+			->set("cors_origins", $config["cors_origins"])
+			->set("cors_methods", $config["cors_methods"])
+			->set("cors_headers", $config["cors_headers"])
+			->set("cors_exposes", $config["cors_exposes"])
+			->set("cors_credentials", $config["cors_credentials"])
+		;
+
+		$configurator->import("../config/services.yaml");
+	}
+
+	/*public function loadExtension(array $config, ContainerConfigurator $configurator, ContainerBuilder $builder): void {
 		$configurator->services()
 			->set(HeaderService::class)
 				->autowire()
@@ -82,20 +98,5 @@ class NewballCommonBundle extends AbstractBundle {
 			->autowire()
 			->autoconfigure()
 		;
-	}
-
-	public function prependExtension(ContainerConfigurator $configurator, ContainerBuilder $builder): void {
-		$builder->prependExtensionConfig("newball_common", [
-			"header_name" => "%env(NB_COMMON_TOKEN_NAME)%",
-			"header_status" => "%env(TOKEN_STATUS)%",
-			"header_user_id" => "%env(TOKEN_ID)%",
-
-			"cors_active" => "%env(NB_COMMON_CORS_ACTIVE)%",
-		    "cors_origins" => "%env(NB_COMMON_CORS_ORIGINS)%",
-		    "cors_methods" => "%env(NB_COMMON_CORS_METHODS)%",
-		    "cors_headers" => "%env(NB_COMMON_CORS_HEADERS)%",
-		    "cors_exposes" => "%env(NB_COMMON_CORS_EXPOSE)%",
-		    "cors_credentials" => "%env(NB_COMMON_CORS_CREDENTIALS)%"
-		]);
-	}
+	}*/
 }

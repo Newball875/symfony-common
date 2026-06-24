@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        bind:
+            $tokenName: "%header_name%"
+            $tokenStatus: "%header_status%"
+            $tokenId: "%header_user_id%"
+
+            $isActive: "%cors_active%"
+            $origins: "%cors_origins%"
+            $methods: "%cors_methods%"
+            $headers: "%cors_headers%"
+            $exposes: "%cors_exposes%"
+            $credentials: "%cors_credentials%"
+
+        Newball\Common\Service\: ~
+        Newball\Common\EventListener\: ~
