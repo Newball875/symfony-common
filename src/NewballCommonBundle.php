@@ -23,6 +23,11 @@ class NewballCommonBundle extends AbstractBundle {
 					->defaultValue("X-User-Id")
 					->info("Nom du header HTTP pour l'id de l'utilisateur authentifié")
 				->end()
+
+				->scalarNode("cors_active")
+					->defaultValue(true)
+					->info("Active ou non la partie CORS de NewballCommon")
+				->end()
 			->end()
 		->end();
 	}
