@@ -76,13 +76,22 @@ class NewballCommonBundle extends AbstractBundle {
 				->arg('$headers', $config["cors_headers"])
 				->arg('$exposes', $config["cors_exposes"])
 				->arg('$credentials', $config["cors_credentials"])
+			->autowire()
+			->autoconfigure()
 		;
 	}
 
 	public function prependExtension(ContainerConfigurator $configurator, ContainerBuilder $builder): void {
 		$builder->prependExtensionConfig("newball_common", [
 			"header_status" => "%env(TOKEN_STATUS)%",
-			"header_user_id" => "%env(TOKEN_ID)%"
+			"header_user_id" => "%env(TOKEN_ID)%",
+
+			"cors_active" => "%env(NB_COMMON_CORS_ACTIVE)%",
+		    "cors_origins" => "%env(NB_COMMON_CORS_ORIGINS)%",
+		    "cors_methods" => "%env(NB_COMMON_CORS_METHODS)%",
+		    "cors_headers" => "%env(NB_COMMON_CORS_HEADERS)%",
+		    "cors_exposes" => "%env(NB_COMMON_CORS_EXPOSE)%",
+		    "cors_credentials" => "%env(NB_COMMON_CORS_CREDENTIALS)%"
 		]);
 	}
 }
