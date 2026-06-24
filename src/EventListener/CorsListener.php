@@ -2,8 +2,10 @@
 
 namespace Newball\Common\EventListener;
 
+use Newball\Common\Service\ApiReponse;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -11,26 +13,34 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 readonly final class CorsListener implements EventSubscriberInterface {
 	private bool $isActive;
-	private string $origins;
-	private string $methods;
-	private string $headers;
-	private string $exposes;
+	private array $origins;
+	private array $methods;
+	private array $headers;
+	private array $exposes;
 	private bool $credentials;
 
 	public function __construct(
-		bool $isActive,
+		string $isActive,
 		string $origins,
 		string $methods,
 		string $headers,
 		string $exposes,
-		bool $credentials
+		string $credentials,
+
+		string $tokenName,
+		string $tokenStatus,
+		string $tokenId,
 	){
-		$this->isActive = $isActive;
-		$this->origins = $origins;
-		$this->methods = $methods;
-		$this->headers = $headers;
-		$this->exposes = $exposes;
-		$this->credentials = $credentials;
+		$this->isActive = filter_var($isActive, FILTER_VALIDATE_BOOLEAN);
+		$this->origins = array_map("trim", explode(",", $origins));
+		$this->methods = array_map("trim", explode(",", $methods));
+
+		$allHeaders = array_map("trim", explode(",", $headers));
+		array_push($allHeaders, $tokenName, $tokenStatus, $tokenId);
+		$this->headers = $allHeaders;
+
+		$this->exposes = array_map("trim", explode(",", $exposes));
+		$this->credentials = filter_var($credentials, FILTER_VALIDATE_BOOLEAN);
 	}
 
 	public static function getSubscribedEvents(): array {
@@ -40,14 +50,10 @@ readonly final class CorsListener implements EventSubscriberInterface {
 		];
 	}
 
-	private function getOrigins(): array{
-		return array_map("trim", explode(",", $this->origins));
-	}
-
 	private function isOriginAllowed(?string $origin): bool{
 		if(!$origin) return false;
 
-		return in_array($origin, $this->getOrigins(), true);
+		return in_array($origin, $this->origins, true);
 	}
 
 	#[AsEventListener(event: KernelEvents::REQUEST)]
@@ -58,14 +64,7 @@ readonly final class CorsListener implements EventSubscriberInterface {
 		$origin = $req->headers->get("Origin");
 
 		if($req->getMethod() == "OPTIONS" && $this->isOriginAllowed($origin)){
-			$reponse = new Response("", Response::HTTP_NO_CONTENT);
-
-			$reponse->headers->set("Access-Control-Allow-Origin", $origin);
-			$reponse->headers->set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-			$reponse->headers->set("Access-Control-Allow-Headers", "Range, Content-Type, Authorization, NB-WS-Password");
-
-
-			$event->setResponse($reponse);
+			$event->setResponse(ApiReponse::cors($this->origins, $this->methods, $this->headers));
 		}
 	}
 	#[AsEventListener(event: KernelEvents::RESPONSE)]
@@ -78,7 +77,7 @@ readonly final class CorsListener implements EventSubscriberInterface {
 		if($origin && $this->isOriginAllowed($origin)){
 			$reponse = $event->getResponse();
 			$reponse->headers->set("Access-Control-Allow-Origin", $origin);
-			$reponse->headers->set("Access-Control-Allow-Credentials", "true");
+			$reponse->headers->set("Access-Control-Allow-Credentials", $this->credentials ? "true": "false");
 		}
 	}
 }

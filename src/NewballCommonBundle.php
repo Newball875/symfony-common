@@ -15,6 +15,10 @@ class NewballCommonBundle extends AbstractBundle {
 	public function configure(DefinitionConfigurator $definition): void {
 		$definition->rootNode()
 			->children()
+				->scalarNode("header_name")
+					->defaultValue("X-Auth-Token")
+					->info("Nom du header HTTP pour le token")
+				->end()
 				->scalarNode("header_status")
 					->defaultValue("X-Auth-Status")
 					->info("Nom du header HTTP pour le statut de l'authentification")
@@ -28,27 +32,22 @@ class NewballCommonBundle extends AbstractBundle {
 					->defaultValue(true)
 					->info("Active ou non la partie CORS de NewballCommon")
 				->end()
-
 				->scalarNode("cors_origins")
 					->defaultValue("")
 					->info("Liste des origins, séparées par une virgule sans espace, autorisées.")
 				->end()
-
 				->scalarNode("cors_methods")
 					->defaultValue("GET,POST,PUT,PATCH,DELETE,OPTIONS")
 					->info("Liste des methods, séparées par une virgule sans espace, autorisées.")
 				->end()
-
 				->scalarNode("cors_headers")
 					->defaultValue("Accept,Content-Type,Range,Authorization")
 					->info("Liste des headers, séparés par une virgule sans espace, autorisés. Prend automatiquement en compte les headers personnalisés")
 				->end()
-
 				->scalarNode("cors_exposes")
 					->defaultValue("Content-Name,Content-Type,Content-Range")
 					->info("Liste des headers, séparés par une virgule sans espace, autorisés.")
 				->end()
-
 				->scalarNode("cors_credentials")
 					->defaultValue(false)
 					->info("Active ou non les credentials, les cookies.")
@@ -76,6 +75,10 @@ class NewballCommonBundle extends AbstractBundle {
 				->arg('$headers', $config["cors_headers"])
 				->arg('$exposes', $config["cors_exposes"])
 				->arg('$credentials', $config["cors_credentials"])
+
+				->arg('$tokenName', $config["header_name"])
+				->arg('$tokenStatus', $config["header_status"])
+				->arg('$tokenId', $config["header_user_id"])
 			->autowire()
 			->autoconfigure()
 		;
@@ -83,6 +86,7 @@ class NewballCommonBundle extends AbstractBundle {
 
 	public function prependExtension(ContainerConfigurator $configurator, ContainerBuilder $builder): void {
 		$builder->prependExtensionConfig("newball_common", [
+			"header_name" => "%env(NB_COMMON_TOKEN_NAME)%",
 			"header_status" => "%env(TOKEN_STATUS)%",
 			"header_user_id" => "%env(TOKEN_ID)%",
 

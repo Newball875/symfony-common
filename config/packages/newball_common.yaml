@@ -1,7 +1,7 @@
 newball_common:
+    header_name: "%env(NB_COMMON_TOKEN_NAME)"
     header_status: "%env(NB_COMMON_TOKEN_STATUS)%"
     header_user_id: "%env(NB_COMMON_TOKEN_ID)%"
-    header_name: "%env(NB_COMMON_TOKEN_NAME)"
 
     cors_active: "%env(NB_COMMON_CORS_ACTIVE)%"
     cors_origins: "%env(NB_COMMON_CORS_ORIGINS)%"
