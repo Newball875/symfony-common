@@ -38,8 +38,8 @@ abstract class AbstractController extends SymfonyController {
 	 * @return Response
 	 * @throws Exception
 	 */
-	protected function successVideo(string $file, int $code = 200): Response{
-		return ApiReponse::video($file, $code);
+	protected function successVideo(string $file, string $source, int $code = 200): Response{
+		return ApiReponse::video($file, $source, $code);
 	}
 
 	/**
