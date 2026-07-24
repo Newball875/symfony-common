@@ -63,11 +63,12 @@ final class ApiReponse {
 
 	/**
 	 * Fonction qui génère correctement un média vidéo
-	 * @param string $file
+	 * @param string $file => le chemin physique du fichier
+	 * @param string $source => le chemin pour le proxy du fichier (exemple : /internal-videos/fichier.mp4 pour **nginx**)
 	 * @param int $code
 	 * @return StreamedResponse
 	 */
-	static public function video(string $file, int $code = 200): Response{
+	static public function video(string $file, string $source, int $code = 200): Response{
 		if(!file_exists($file)){
 			throw Exception::noFile();
 		}
@@ -79,7 +80,8 @@ final class ApiReponse {
 		$reponse->headers->set("Access-Control-Allow-Origin", '*');
 		$reponse->headers->set("Access-Control-Allow-Credentials", "true");
 		$reponse->headers->set("Content-Type", "video/mp4");
-		$reponse->headers->set("X-Sendfile", $file);
+		$reponse->headers->set("X-Send-file", $source);
+		$reponse->headers->set("X-Accel-Redirect", $source);
 		$reponse->headers->set("Content-Disposition", "attachment");
 		return $reponse;
 	}
