@@ -89,18 +89,26 @@ final class ApiReponse {
 	/**
 	 * Fonction qui génère correctement un média image
 	 * @param string $file
+	 * @param string $source => le chemin pour le proxy du fichier (exemple : /internal-images/fichier.png pour **nginx**)
 	 * @param int $code
 	 * @return Response
 	 * @throws Exception
 	 */
-	static public function image(string $file, int $code = 200): Response{
+	static public function image(string $file, string $source, int $code = 200): Response{
 		if(!file_exists($file)){
 			throw Exception::noImage();
 		}
-		return new Response(file_get_contents($file), $code, [
-			"Content-Type" => mime_content_type($file),
-			"Content-Disposition" => "inline; filename=\"".basename($file)."\""
-		]);
+		if(!is_readable($file)){
+			throw Exception::fileNotReadable();
+		}
+
+		$reponse = new Response();
+		$reponse->setStatusCode($code);
+		$reponse->headers->set("Content-Type", mime_content_type($file), '*');
+		$reponse->headers->set("Content-Disposition", "inline; filename=\"".basename($file)."\"");
+		$reponse->headers->set("X-Accel-Redirect", $source);
+
+		return $reponse;
 	}
 
 	/**
