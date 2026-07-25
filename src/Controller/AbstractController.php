@@ -29,7 +29,7 @@ abstract class AbstractController extends SymfonyController {
 	 * @throws Exception
 	 */
 	protected function successImage(string $file, string $source, int $code = 200): Response{
-		return ApiReponse::image($file, $code);
+		return ApiReponse::image($file, $source, $code);
 	}
 
 	/**
