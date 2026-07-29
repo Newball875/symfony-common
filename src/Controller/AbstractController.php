@@ -47,11 +47,12 @@ abstract class AbstractController extends SymfonyController {
 	/**
 	 * Fonction de succès qui retourne l'audio demandée
 	 * @param string $file
+	 * @param string $source => le chemin pour le proxy du fichier (exemple : /internal-musiques/fichier.mp3 pour **nginx**)
 	 * @param int $code
 	 * @return Response
 	 * @throws Exception
 	 */
-	protected function successAudio(string $file, int $code = 200): Response{
-		return ApiReponse::audio($file, $code);
+	protected function successAudio(string $file, string $source, int $code = 200): Response{
+		return ApiReponse::audio($file, $source, $code);
 	}
 }
