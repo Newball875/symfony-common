@@ -7,10 +7,12 @@ use Newball\Common\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class HeaderService {
+	private string $tokenName;
 	private string $tokenStatus;
 	private string $tokenId;
 
-	public function __construct(string $tokenStatus, string $tokenId){
+	public function __construct(string $tokenName, string $tokenStatus, string $tokenId){
+		$this->tokenName = $tokenName;
 		$this->tokenStatus = $tokenStatus;
 		$this->tokenId = $tokenId;
 	}
@@ -33,5 +35,9 @@ class HeaderService {
 
 	public function isStatusOk(Request $request): bool{
 		return $request->headers->get($this->tokenStatus) == "Valid";
+	}
+
+	public function getToken(Request $request): string{
+		return $request->headers->get($this->tokenName) ?? "";
 	}
 }
