@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 abstract class AbstractController extends SymfonyController {
 	private MessageBusInterface $bus;
 
-	protected function __construct(
+	public function __construct(
 		MessageBusInterface $bus,
 	){
 		$this->bus = $bus;
