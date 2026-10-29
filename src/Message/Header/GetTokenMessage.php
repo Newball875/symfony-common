@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @extends AbstractMessage<string>
+ * @method static static message(Request $request)
  */
 readonly class GetTokenMessage extends AbstractMessage {
 	protected function __construct(private Request $request){
