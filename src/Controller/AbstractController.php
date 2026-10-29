@@ -4,12 +4,23 @@ namespace Newball\Common\Controller;
 
 use Newball\Common\DTO\EntityDTO;
 use Newball\Common\Exception\Exception;
+use Newball\Common\Message\AbstractMessage;
 use Newball\Common\Service\ApiReponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 abstract class AbstractController extends SymfonyController {
+	private MessageBusInterface $bus;
+
+	protected function __construct(
+		MessageBusInterface $bus,
+	){
+		$this->bus = $bus;
+	}
+
 	/**
 	 * Fonction de succès qui retourne les données au format défini
 	 * @param string|EntityDTO|iterable<EntityDTO> $data Données à renvoyer
@@ -54,5 +65,21 @@ abstract class AbstractController extends SymfonyController {
 	 */
 	protected function successAudio(string $file, string $source, int $code = 200): Response{
 		return ApiReponse::audio($file, $source, $code);
+	}
+
+	/**
+	 * Fonction qui envoie un message et renvoie une réponse
+	 * @template T
+	 * @param AbstractMessage<T> $message
+	 * @return T
+	 * @throws Exception
+	 */
+	protected function getMessageResult(AbstractMessage $message): mixed{
+		$enveloppe = $this->bus->dispatch($message);
+		$handleStamp = $enveloppe->last(HandledStamp::class);
+		if(!$handleStamp instanceof HandledStamp){
+			throw Exception::noHandler(message: sprintf("Aucun handler pour le message: %s", $message::class));
+		}
+		return $handleStamp->getResult();
 	}
 }
