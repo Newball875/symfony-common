@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-readonly final class CorsListener extends AbstractListener implements EventSubscriberInterface {
+readonly class CorsListener extends AbstractListener implements EventSubscriberInterface {
 	private bool $isActive;
 	private array $origins;
 	private array $methods;
@@ -29,8 +29,6 @@ readonly final class CorsListener extends AbstractListener implements EventSubsc
 		string $tokenName,
 		string $tokenStatus,
 		string $tokenId,
-
-		MessageBusInterface $bus
 	){
 		$this->isActive = filter_var($isActive, FILTER_VALIDATE_BOOLEAN);
 		$this->origins = array_map("trim", explode(",", $origins));
@@ -42,8 +40,6 @@ readonly final class CorsListener extends AbstractListener implements EventSubsc
 
 		$this->exposes = array_map("trim", explode(",", $exposes));
 		$this->credentials = filter_var($credentials, FILTER_VALIDATE_BOOLEAN);
-
-		parent::__construct($bus);
 	}
 
 	public static function getSubscribedEvents(): array {
