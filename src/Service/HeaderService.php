@@ -7,7 +7,7 @@ use Newball\Common\Message\Header as HeaderMessage;
 
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class HeaderService {
+class HeaderService extends AbstractService {
 	private string $tokenName;
 	private string $tokenStatus;
 	private string $tokenId;
