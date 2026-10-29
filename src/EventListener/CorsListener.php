@@ -28,13 +28,14 @@ class CorsListener extends AbstractListener implements EventSubscriberInterface 
 		string $tokenName,
 		string $tokenStatus,
 		string $tokenId,
+		string $tokenApp
 	){
 		$this->isActive = filter_var($isActive, FILTER_VALIDATE_BOOLEAN);
 		$this->origins = array_map("trim", explode(",", $origins));
 		$this->methods = array_map("trim", explode(",", $methods));
 
 		$allHeaders = array_map("trim", explode(",", $headers));
-		array_push($allHeaders, $tokenName, $tokenStatus, $tokenId);
+		array_push($allHeaders, $tokenName, $tokenStatus, $tokenId, $tokenApp);
 		$this->headers = $allHeaders;
 
 		$this->exposes = array_map("trim", explode(",", $exposes));
