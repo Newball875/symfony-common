@@ -8,9 +8,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Messenger\MessageBusInterface;
 
-readonly class CorsListener extends AbstractListener implements EventSubscriberInterface {
+class CorsListener extends AbstractListener implements EventSubscriberInterface {
 	private bool $isActive;
 	private array $origins;
 	private array $methods;
