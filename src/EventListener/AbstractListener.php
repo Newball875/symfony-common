@@ -10,7 +10,7 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 readonly abstract class AbstractListener {
 	private MessageBusInterface $bus;
 
-	protected function __construct(MessageBusInterface $bus){
+	public function __construct(MessageBusInterface $bus){
 		$this->bus = $bus;
 	}
 
