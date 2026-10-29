@@ -6,6 +6,7 @@ use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+use function Ds\set;
 
 class NewballCommonBundle extends AbstractBundle {
 
@@ -23,6 +24,10 @@ class NewballCommonBundle extends AbstractBundle {
 				->scalarNode("header_user_id")
 					->defaultValue("X-User-Id")
 					->info("Nom du header HTTP pour l'id de l'utilisateur authentifié")
+				->end()
+				->scalarNode("header_app")
+					->defaultValue("X-App-Name")
+					->info("Nom du header HTTP pour le nom de l'application concernée")
 				->end()
 
 				->scalarNode("cors_active")
@@ -58,6 +63,7 @@ class NewballCommonBundle extends AbstractBundle {
 			->set("header_name", $config["header_name"])
 			->set("header_status", $config["header_status"])
 			->set("header_user_id", $config["header_user_id"])
+			->set("header_app", $config["header_app"])
 			->set("cors_active", $config["cors_active"])
 			->set("cors_origins", $config["cors_origins"])
 			->set("cors_methods", $config["cors_methods"])
