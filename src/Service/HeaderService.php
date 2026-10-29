@@ -53,6 +53,7 @@ class HeaderService {
 		return $request->headers->get($this->tokenName) ?? "";
 	}
 
+	#[AsMessageHandler]
 	public function getTokenMessage(HeaderMessage\GetTokenMessage $message): ?string{
 		$request = $message->getRequest();
 		return $request->headers->get($this->tokenName) ?? "";
