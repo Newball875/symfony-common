@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * Gère le renvoi d'exceptions sous format JSON
  */
-readonly final class ExceptionListener extends AbstractListener {
+final class ExceptionListener extends AbstractListener {
 	#[AsEventListener(event: KernelEvents::EXCEPTION)]
 	public function onKernelException(ExceptionEvent $event): void{
 		$exception = $event->getThrowable();
