@@ -81,6 +81,20 @@ class Exception extends PHPException {
 	}
 
 	/**
+	 * Handler non existant pour ce message
+	 * @param string $message
+	 * @param int $http_code
+	 * @param ExceptionCode $app_code
+	 */
+	public static function noHandler(
+		string $message = "Aucun handler pour ce message",
+		int $http_code = 404,
+		ExceptionCode $app_code = ExceptionCode::NO_HANDLER
+	):self{
+		return new self($message, $http_code, $app_code);
+	}
+
+	/**
 	 * Fichier d'image non trouvé
 	 * @param string $message
 	 * @param int $http_code

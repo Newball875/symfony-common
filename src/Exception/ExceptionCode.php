@@ -75,6 +75,11 @@ enum ExceptionCode : int {
 	 */
 	case HEADER_DATA = 206;
 
+	/**
+	 * Pas de handler
+	 */
+	case NO_HANDLER = 207;
+
 	/// CODES 3XX : ERREUR FICHIER ///
 
 	/**

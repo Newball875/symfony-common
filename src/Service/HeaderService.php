@@ -3,8 +3,10 @@
 namespace Newball\Common\Service;
 
 use Newball\Common\Exception\Exception;
+use Newball\Common\Message\Header as HeaderMessage;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 class HeaderService {
 	private string $tokenName;
@@ -18,6 +20,16 @@ class HeaderService {
 	}
 
 	public function getId(Request $request): ?int{
+		$id = $request->headers->get($this->tokenId);
+		if($id){
+			return intval($id);
+		}
+		return null;
+	}
+
+	#[AsMessageHandler]
+	public function getIdMessage(HeaderMessage\GetIdMessage $message): ?int{
+		$request = $message->getRequest();
 		$id = $request->headers->get($this->tokenId);
 		if($id){
 			return intval($id);
