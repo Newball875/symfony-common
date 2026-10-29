@@ -11,11 +11,18 @@ class HeaderService extends AbstractService {
 	private string $tokenName;
 	private string $tokenStatus;
 	private string $tokenId;
+	private string $tokenApp;
 
-	public function __construct(string $tokenName, string $tokenStatus, string $tokenId){
+	public function __construct(
+		string $tokenName,
+		string $tokenStatus,
+		string $tokenId,
+		string $tokenApp
+	){
 		$this->tokenName = $tokenName;
 		$this->tokenStatus = $tokenStatus;
 		$this->tokenId = $tokenId;
+		$this->tokenApp = $tokenApp;
 	}
 
 	#[AsMessageHandler]
@@ -41,6 +48,12 @@ class HeaderService extends AbstractService {
 	public function isStatusOk(HeaderMessage\GetStatusMessage $message): bool{
 		$request = $message->getRequest();
 		return $request->headers->get($this->tokenStatus) == "Valid";
+	}
+
+	#[AsMessageHandler]
+	public function getApp(HeaderMessage\GetAppMessage $message): string{
+		$request = $message->getRequest();
+		return $request->headers->get($this->tokenApp) ?? "";
 	}
 
 	#[AsMessageHandler]

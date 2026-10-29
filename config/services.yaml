@@ -6,6 +6,7 @@ services:
             $tokenName: "%header_name%"
             $tokenStatus: "%header_status%"
             $tokenId: "%header_user_id%"
+            $tokenApp: "%header_app%"
 
             $isActive: "%cors_active%"
             $origins: "%cors_origins%"
