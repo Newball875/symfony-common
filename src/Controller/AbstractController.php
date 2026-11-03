@@ -4,14 +4,17 @@ namespace Newball\Common\Controller;
 
 use Newball\Common\DTO\EntityDTO;
 use Newball\Common\Exception\Exception;
-use Newball\Common\Message\MessageTrait;
+use Newball\Common\Log\LoggerI;
+use Newball\Common\Log\TraitLogger;
+use Newball\Common\Message\TraitMessage;
 use Newball\Common\Service\ApiReponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyController;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class AbstractController extends SymfonyController {
-	use MessageTrait;
+abstract class AbstractController extends SymfonyController implements LoggerI {
+	use TraitMessage;
+	use TraitLogger;
 
 	/**
 	 * Fonction de succès qui retourne les données au format défini

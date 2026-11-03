@@ -15,6 +15,11 @@ services:
             $exposes: "%cors_exposes%"
             $credentials: "%cors_credentials%"
 
+    _instanceof:
+        Newball\Common\Log\LoggerI:
+            tags:
+                - { name: monolog.logger, channel: newball_common }
+
     Newball\Common\Service\:
         resource: "../src/Service/"
     Newball\Common\EventListener\:

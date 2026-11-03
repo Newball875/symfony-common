@@ -3,7 +3,9 @@
 namespace Newball\Common\EventListener;
 
 use Newball\Common\Exception\Exception;
+use Newball\Common\Exception\ExceptionCode;
 use Newball\Common\Service\ApiReponse;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -21,12 +23,21 @@ final class ExceptionListener extends AbstractListener {
 		if($exception instanceof Exception){
 			$statusCode = $exception->getHttpCode();
 			$appCode = $exception->getAppCode();
+		}else{
+			$exception = new Exception(
+				message: $exception->getMessage(),
+				code: $exception->getCode()
+			);
 		}
 		$json = ApiReponse::error(
 			message: $exception->getMessage(),
 			http_code: $statusCode,
 			app_code: $appCode
 		);
+		if($appCode != ExceptionCode::NO_ROUTE){
+			$this->logException($exception);
+		}
+
 		$event->setResponse($json);
 	}
 

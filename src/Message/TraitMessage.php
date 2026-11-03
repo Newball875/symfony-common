@@ -7,11 +7,11 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Contracts\Service\Attribute\Required;
 
-trait MessageTrait {
+trait TraitMessage {
 	private MessageBusInterface $bus;
 
 	#[Required]
-	public function setMessageBus(MessageBusInterface $bus){
+	public function setMessageBus(MessageBusInterface $bus): void{
 		$this->bus = $bus;
 	}
 
