@@ -7,7 +7,6 @@ use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-use function Ds\set;
 
 class NewballCommonBundle extends AbstractBundle {
 
@@ -74,10 +73,5 @@ class NewballCommonBundle extends AbstractBundle {
 		;
 
 		$configurator->import("../config/services.yaml");
-	}
-
-	public function build(ContainerBuilder $container): void {
-		parent::build($container);
-		$container->addCompilerPass(new LoggerPass());
 	}
 }
