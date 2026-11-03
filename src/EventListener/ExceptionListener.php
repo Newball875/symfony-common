@@ -34,7 +34,7 @@ final class ExceptionListener extends AbstractListener {
 	public function updateException(ExceptionEvent $event): void{
 		$exception = $event->getThrowable();
 		if($exception instanceof NotFoundHttpException){
-			$route = $event->getRequest()->attributes->get("_route");
+			$route = $event->getRequest()->getRequestUri();
 			$routeException = Exception::noRoute("Aucune route à l'adresse $route");
 			$event->setThrowable($routeException);
 		}
