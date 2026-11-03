@@ -4,6 +4,7 @@ namespace Newball\Common;
 
 use Newball\Common\DependencyInjection\Compiler\LoggerPass;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
@@ -73,5 +74,11 @@ class NewballCommonBundle extends AbstractBundle {
 		;
 
 		$configurator->import("../config/services.yaml");
+	}
+
+	public function build(ContainerBuilder $container): void {
+		parent::build($container);
+
+		$container->addCompilerPass(new LoggerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
 	}
 }
