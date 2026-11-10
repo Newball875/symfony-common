@@ -12,7 +12,7 @@ abstract class AbstractResolver {
 		$this->rep = $rep;
 	}
 
-	abstract public function supports(string $datatable): bool;
+	abstract public function supports(string $class): bool;
 
 	/**
 	 * @param object $entity
