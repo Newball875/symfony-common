@@ -4,6 +4,7 @@ namespace Newball\Common\Message;
 
 use Newball\Common\Exception\Exception;
 use Newball\Common\Resolver\AbstractResolver;
+use Newball\Common\Resolver\TraitResolver;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
@@ -11,22 +12,12 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 trait TraitMessage {
 	private MessageBusInterface $bus;
-	/**
-	 * @var iterable<AbstractResolver>
-	 */
-	private iterable $resolvers;
+
+	use TraitResolver;
 
 	#[Required]
 	public function setMessageBus(MessageBusInterface $bus): void{
 		$this->bus = $bus;
-	}
-
-	/**
-	 * @param iterable<AbstractResolver> $resolvers
-	 */
-	#[Required]
-	public function setResolvers(#[AutowireIterator("newball.resolver")] iterable $resolvers): void {
-		$this->resolvers = $resolvers;
 	}
 
 	/**
@@ -44,6 +35,18 @@ trait TraitMessage {
 		}
 
 		$result = $handleStamp->getResult();
+		if($message->useDto()){
+			if(is_array($result)){
+				$all = [];
+				foreach($result as $item){
+					$resolver = $this->getResolver($item);
+					if($resolver){
+						$all[] = $resolver->toDTO($item);
+					}
+				}
+				return $all;
+			}
+		}
 		return $result;
 	}
 }
