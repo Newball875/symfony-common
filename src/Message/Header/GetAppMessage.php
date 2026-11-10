@@ -6,10 +6,10 @@ use Newball\Common\Message\AbstractMessage;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @extends AbstractMessage<string>
+ * @extends AbstractMessage<string, string>
  * @method static static message(Request $request)
  */
-readonly class GetAppMessage extends AbstractMessage {
+class GetAppMessage extends AbstractMessage {
 	protected function __construct(private Request $request){
 		parent::__construct();
 	}
