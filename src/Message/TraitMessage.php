@@ -34,19 +34,6 @@ trait TraitMessage {
 			throw Exception::noHandler(message: sprintf("Aucun handler pour le message: %s", $message::class));
 		}
 
-		$result = $handleStamp->getResult();
-		if($message->useDto()){
-			if(is_array($result)){
-				$all = [];
-				foreach($result as $item){
-					$resolver = $this->getResolver($item);
-					if($resolver){
-						$all[] = $resolver->toDTO($item);
-					}
-				}
-				return $all;
-			}
-		}
-		return $result;
+		return $handleStamp->getResult();
 	}
 }
