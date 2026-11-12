@@ -32,7 +32,7 @@ abstract class AbstractResolver {
 	 */
 	public function toDTO(Entity $entity, mixed ...$kwargs): EntityDTO{
 		$factoryClass = $this->getFactoryClass();
-		return $factoryClass::toDTO($entity, $kwargs);
+		return $factoryClass::toDTO($entity, ...$kwargs);
 	}
 
 	/**
@@ -42,6 +42,6 @@ abstract class AbstractResolver {
 	 */
 	public function allToDTO(iterable $entities, mixed ...$kwargs): iterable{
 		$factoryClass = $this->getFactoryClass();
-		return $factoryClass::allToDTO($entities, $kwargs);
+		return $factoryClass::allToDTO($entities, ...$kwargs);
 	}
 }
