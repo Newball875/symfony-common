@@ -4,11 +4,12 @@ namespace Newball\Common\Resolver;
 
 use Newball\Common\DTO\EntityDTO;
 use Newball\Common\Entity\Entity;
+use Newball\Common\Factory\FactoryI;
 use Newball\Common\Repository\RepositoryI;
 
 /**
  * @template T of Entity
- * @template TDTO of EntityDTO
+ * @template DTO of EntityDTO
  */
 abstract class AbstractResolver {
 	private RepositoryI $rep;
@@ -19,18 +20,28 @@ abstract class AbstractResolver {
 
 	abstract public function supports(mixed $item): bool;
 
+	/**
+	 * @return class-string<FactoryI<T, DTO>>
+	 */
 	abstract protected function getFactoryClass(): string;
 
 	/**
 	 * @param T $entity
-	 * @param int $niveau
-	 * @return TDTO
+	 * @param mixed ...$kwargs
+	 * @return DTO
 	 */
-	abstract public function toDTO(Entity $entity, int $niveau = 0): EntityDTO;
+	public function toDTO(Entity $entity, mixed ...$kwargs): EntityDTO{
+		$factoryClass = $this->getFactoryClass();
+		return $factoryClass::toDTO($entity, $kwargs);
+	}
 
 	/**
 	 * @param iterable<T> $entities
-	 * @return iterable<TDTO>
+	 * @param mixed ...$kwargs
+	 * @return iterable<DTO>
 	 */
-	abstract public function allToDTO(iterable $entities, int $niveau = 0): iterable;
+	public function allToDTO(iterable $entities, mixed ...$kwargs): iterable{
+		$factoryClass = $this->getFactoryClass();
+		return $factoryClass::allToDTO($entities, $kwargs);
+	}
 }

@@ -6,7 +6,7 @@ use Newball\Common\DTO\ValueObjectDTO;
 use Newball\Common\ValueObject\ValueObjectI;
 
 /**
- * @extends AbstractFactory
+ * @extends AbstractFactory<ValueObjectI, ValueObjectDTO>
  */
 class ValueObjectFactory extends AbstractFactory {
 
