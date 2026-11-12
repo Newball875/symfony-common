@@ -3,6 +3,7 @@
 namespace Newball\Common\Controller;
 
 use Newball\Common\DTO\EntityDTO;
+use Newball\Common\Entity\Entity;
 use Newball\Common\Exception\Exception;
 use Newball\Common\Log\LoggerI;
 use Newball\Common\Log\TraitLogger;
@@ -20,22 +21,36 @@ abstract class AbstractController extends SymfonyController implements LoggerI {
 
 	/**
 	 * Fonction de succès qui retourne les données au format défini
-	 * @param string|EntityDTO|iterable<EntityDTO> $data Données à renvoyer
+	 * @param string|Entity|iterable<Entity> $data Données à renvoyer
 	 * @param int $code => Code de la réponse (200 de base)
 	 * @return Response
 	 */
-	protected function success(EntityDTO|string|array $data, int $code = 200): Response{
-		if(is_iterable($data) && is_object($data[0]) && !($data[0] instanceof EntityDTO)){
-			$dto = [];
-			foreach ($data as $item){
-				$resolver = $this->getResolver($item);
+	protected function success(Entity|string|array $data, int $code = 200): Response{
+		// Si on a une Entity
+		if($data instanceof Entity){
+			$resolver = $this->getResolver($data);
+			return ApiReponse::success($resolver->toDTO($data), $code);
+		}
+
+		// Si on a un tableau
+		if(is_iterable($data) && $data[0] instanceof Entity){
+			$dtos = [];
+			foreach ($data as $entity){
+				$resolver = $this->getResolver($entity);
 				if($resolver){
-					$dto[] = $resolver->toDTO($item);
+					$dtos[] = $resolver?->toDTO($entity);
 				}
 			}
-			return ApiReponse::success($dto, $code);
+			return ApiReponse::success($dtos, $code);
 		}
-		return ApiReponse::success($data, $code);
+
+		// Si on a un string
+		if(is_string($data)){
+			return ApiReponse::success($data, $code);
+		}
+
+		// Sinon, on lance une erreur
+		throw Exception::badReturn();
 	}
 
 	/**

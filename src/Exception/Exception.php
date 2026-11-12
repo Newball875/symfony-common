@@ -135,4 +135,18 @@ class Exception extends PHPException {
 	):self{
 		return new self($message, $http_code, $app_code);
 	}
+
+	/**
+	 * Type de retour non compatible
+	 * @param string $message
+	 * @param int $http_code
+	 * @param ExceptionCode $app_code
+	 */
+	public static function badReturn(
+		string $message = "Impossible de retourner ce type de donnée",
+		int $http_code = 421,
+		ExceptionCode $app_code = ExceptionCode::BAD_TYPE
+	):self{
+		return new self($message, $http_code, $app_code);
+	}
 }
