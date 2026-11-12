@@ -3,8 +3,13 @@
 namespace Newball\Common\Resolver;
 
 use Newball\Common\DTO\EntityDTO;
+use Newball\Common\Entity\Entity;
 use Newball\Common\Repository\RepositoryI;
 
+/**
+ * @template T of Entity
+ * @template TDTO of EntityDTO
+ */
 abstract class AbstractResolver {
 	private RepositoryI $rep;
 
@@ -15,14 +20,14 @@ abstract class AbstractResolver {
 	abstract public function supports(mixed $item): bool;
 
 	/**
-	 * @param object $entity
-	 * @return EntityDTO
+	 * @param T $entity
+	 * @return TDTO
 	 */
-	abstract public function toDTO(object $entity): EntityDTO;
+	abstract public function toDTO(Entity $entity): EntityDTO;
 
 	/**
-	 * @param iterable<object> $entities
-	 * @return iterable<EntityDTO>
+	 * @param iterable<T> $entities
+	 * @return iterable<TDTO>
 	 */
 	abstract public function allToDTO(iterable $entities): iterable;
 }

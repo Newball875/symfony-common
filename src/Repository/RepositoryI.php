@@ -2,8 +2,11 @@
 
 namespace Newball\Common\Repository;
 
-use Newball\Common\DTO\EntityDTO;
+use Newball\Common\Entity\Entity;
 
+/**
+ * @template T of Entity
+ */
 interface RepositoryI {
 
 }
