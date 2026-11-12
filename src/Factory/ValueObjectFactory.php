@@ -5,6 +5,9 @@ namespace Newball\Common\Factory;
 use Newball\Common\DTO\ValueObjectDTO;
 use Newball\Common\ValueObject\ValueObjectI;
 
+/**
+ * @extends AbstractFactory
+ */
 class ValueObjectFactory extends AbstractFactory {
 
 	/**

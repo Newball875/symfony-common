@@ -25,11 +25,11 @@ abstract class AbstractController extends SymfonyController implements LoggerI {
 	 * @param int $code => Code de la réponse (200 de base)
 	 * @return Response
 	 */
-	protected function success(Entity|string|array $data, int $code = 200): Response{
+	protected function success(Entity|string|array $data, int $code = 200, int $niveau = 0): Response{
 		// Si on a une Entity
 		if($data instanceof Entity){
 			$resolver = $this->getResolver($data);
-			return ApiReponse::success($resolver->toDTO($data), $code);
+			return ApiReponse::success($resolver->toDTO($data, $niveau), $code);
 		}
 
 		// Si on a un tableau
@@ -38,7 +38,7 @@ abstract class AbstractController extends SymfonyController implements LoggerI {
 			foreach ($data as $entity){
 				$resolver = $this->getResolver($entity);
 				if($resolver){
-					$dtos[] = $resolver?->toDTO($entity);
+					$dtos[] = $resolver->toDTO($entity);
 				}
 			}
 			return ApiReponse::success($dtos, $code);

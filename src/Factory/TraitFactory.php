@@ -4,17 +4,18 @@ namespace Newball\Common\Factory;
 
 use Doctrine\Common\Collections\Collection;
 use Newball\Common\DTO\EntityDTO;
+use Newball\Common\Entity\Entity;
 
 /**
- * @method mixed toDTO($entity, mixed ...$kwargs)
+ * @method EntityDTO static toDTO(Entity $entity, mixed ...$kwargs)
  */
 trait TraitFactory {
 	/**
-	 * @param iterable $entities
+	 * @param iterable<Entity> $entities
 	 * @param mixed ...$kwargs
 	 * @return EntityDTO[]
 	 */
-	static private function mapFromEntities($entities, mixed ...$kwargs): array{
+	static private function mapFromEntities(iterable $entities, mixed ...$kwargs): array{
 		if($entities instanceof Collection){
 			return self::mapFromCollection($entities, ...$kwargs);
 		}
@@ -30,6 +31,11 @@ trait TraitFactory {
 		return $result;
 	}
 
+	/**
+	 * @param Entity[] $entities
+	 * @param mixed ...$kwargs
+	 * @return EntityDTO[]
+	 */
 	static private function mapFromArray(array $entities, mixed ...$kwargs): array{
 		return array_map(
 			fn($entity) => static::toDTO($entity, ...$kwargs),
@@ -37,6 +43,11 @@ trait TraitFactory {
 		);
 	}
 
+	/**
+	 * @param Collection<Entity> $collection
+	 * @param mixed ...$kwargs
+	 * @return EntityDTO[]
+	 */
 	static private function mapFromCollection(Collection $collection, mixed ...$kwargs): array{
 		return $collection->map(fn($entity) => static::toDTO($entity, ...$kwargs))->getValues();
 	}
