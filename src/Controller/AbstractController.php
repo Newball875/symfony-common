@@ -7,6 +7,7 @@ use Newball\Common\Exception\Exception;
 use Newball\Common\Log\LoggerI;
 use Newball\Common\Log\TraitLogger;
 use Newball\Common\Message\TraitMessage;
+use Newball\Common\Resolver\TraitResolver;
 use Newball\Common\Service\ApiReponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyController;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class AbstractController extends SymfonyController implements LoggerI {
 	use TraitMessage;
 	use TraitLogger;
+	use TraitResolver;
 
 	/**
 	 * Fonction de succès qui retourne les données au format défini
@@ -23,6 +25,16 @@ abstract class AbstractController extends SymfonyController implements LoggerI {
 	 * @return Response
 	 */
 	protected function success(EntityDTO|string|array $data, int $code = 200): Response{
+		if(is_iterable($data) && is_object($data[0]) && !($data[0] instanceof EntityDTO)){
+			$dto = [];
+			foreach ($data as $item){
+				$resolver = $this->getResolver($item);
+				if($resolver){
+					$dto[] = $resolver->toDTO($item);
+				}
+			}
+			return ApiReponse::success($dto, $code);
+		}
 		return ApiReponse::success($data, $code);
 	}
 
