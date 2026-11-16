@@ -61,9 +61,12 @@ class CorsListener extends AbstractListener implements EventSubscriberInterface 
 
 		$req = $event->getRequest();
 		$origin = $req->headers->get("Origin");
+		$allowed = $this->isOriginAllowed($origin);
 
-		if($req->getMethod() == "OPTIONS" && $this->isOriginAllowed($origin)){
+		if($req->getMethod() == "OPTIONS" && $allowed){
 			$event->setResponse(ApiReponse::cors($this->origins, $this->methods, $this->headers, $this->exposes));
+		}else if(!$allowed){
+			$this->logError("Origine $origin non autorisée", []);
 		}
 	}
 	#[AsEventListener(event: KernelEvents::RESPONSE)]

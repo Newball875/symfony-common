@@ -15,6 +15,14 @@ trait TraitLogger {
 		$this->logger = $logger;
 	}
 
+	protected function logInfo(string $message, array $context): void{
+		$this->logger->info($message, $context);
+	}
+
+	protected function logError(string $message, array $context): void{
+		$this->logger->error($message, $context);
+	}
+
 	protected function logRequest(Request $req, string $message = "Appel API"): void{
 		$this->logger->info($message, [
 			"url" => $req->getRequestUri()
