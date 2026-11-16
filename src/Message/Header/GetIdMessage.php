@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @extends AbstractMessage<?int>
  * @method static static message(Request $request)
  */
-class GetIdMessage extends AbstractMessage {
+readonly class GetIdMessage extends AbstractMessage {
 	protected function __construct(private Request $request){
 		parent::__construct();
 	}
