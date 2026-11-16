@@ -5,6 +5,7 @@ namespace Newball\Common\EventListener;
 use Newball\Common\Service\ApiReponse;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -65,8 +66,11 @@ class CorsListener extends AbstractListener implements EventSubscriberInterface 
 
 		if($req->getMethod() == "OPTIONS" && $allowed){
 			$event->setResponse(ApiReponse::cors($this->origins, $this->methods, $this->headers, $this->exposes));
-		}else if(!$allowed){
-			$this->logError("Origine $origin non autorisée", []);
+		}else{
+			$event->setResponse(new Response(status: 403));
+			if(!$allowed){
+				$this->logError("Origine $origin non autorisée", []);
+			}
 		}
 	}
 	#[AsEventListener(event: KernelEvents::RESPONSE)]
