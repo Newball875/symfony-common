@@ -108,4 +108,9 @@ enum ExceptionCode : int {
 	 * Info non renseignée
 	 */
 	case NOT_REGISTERED = 402;
+
+	/**
+	 * Erreur de traitement dans le handler
+	 */
+	case HANDLER_ERROR = 403;
 }

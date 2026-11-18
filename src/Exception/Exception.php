@@ -95,6 +95,20 @@ class Exception extends PHPException {
 	}
 
 	/**
+	 * Erreur interne dans le traitement du message
+	 * @param string $message
+	 * @param integer $http_code
+	 * @param ExceptionCode $app_code
+	 */
+	public static function handlerError(
+		string $message = "Erreur dans le handler",
+		int $http_code = 500,
+		ExceptionCode $app_code = ExceptionCode::HANDLER_ERROR
+	):self{
+		return new self($message, $http_code, $app_code);
+	}
+
+	/**
 	 * Fichier d'image non trouvé
 	 * @param string $message
 	 * @param int $http_code

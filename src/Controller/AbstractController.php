@@ -24,7 +24,7 @@ abstract class AbstractController extends SymfonyController implements LoggerI {
 	 * @param int $code => Code de la réponse (200 de base)
 	 * @return Response
 	 */
-	protected function success(EntityDTO|string|array $data, int $code = 200, int $niveau = 0): Response{
+	protected function success(EntityDTO|string|array $data, int $code = 200): Response{
 		return ApiReponse::success($data, $code);
 	}
 
