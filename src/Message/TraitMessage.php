@@ -3,6 +3,7 @@
 namespace Newball\Common\Message;
 
 use Newball\Common\Exception\Exception;
+use Newball\Common\Log\TraitLogger;
 use Newball\Common\Resolver\TraitResolver;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -13,6 +14,7 @@ trait TraitMessage {
 	private MessageBusInterface $bus;
 
 	use TraitResolver;
+	use TraitLogger;
 
 	#[Required]
 	public function setMessageBus(MessageBusInterface $bus): void{
@@ -38,6 +40,8 @@ trait TraitMessage {
 		}catch(Exception $e){
 			throw $e;
 		}catch(HandlerFailedException $hfe){
+			$this->logError(sprintf("Erreur dans la gestion de %s", $message::class), []);
+
 			$exception = $hfe->getPrevious();
 			if($exception instanceof Exception){
 				throw $exception;
