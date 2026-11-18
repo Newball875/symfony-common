@@ -4,6 +4,7 @@ namespace Newball\Common\Message;
 
 use Newball\Common\Exception\Exception;
 use Newball\Common\Resolver\TraitResolver;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -36,6 +37,14 @@ trait TraitMessage {
 			return $handleStamp->getResult();
 		}catch(Exception $e){
 			throw $e;
+		}catch(HandlerFailedException $hfe){
+			$exception = $hfe->getPrevious();
+			if($exception instanceof Exception){
+				throw $exception;
+			}else{
+				$message = $exception->getMessage();
+				throw Exception::handlerError("Erreur dans le handler : $message");
+			}
 		}catch(\Exception $ex){
 			$message = $ex->getMessage();
 			throw Exception::handlerError("Erreur dans le handler : $message");
