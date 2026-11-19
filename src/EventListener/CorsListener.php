@@ -27,7 +27,6 @@ class CorsListener extends AbstractListener implements EventSubscriberInterface 
 		string $credentials,
 
 		string $tokenName,
-		string $tokenStatus,
 		string $tokenId,
 		string $tokenApp
 	){
@@ -36,7 +35,7 @@ class CorsListener extends AbstractListener implements EventSubscriberInterface 
 		$this->methods = array_map("trim", explode(",", $methods));
 
 		$allHeaders = array_map("trim", explode(",", $headers));
-		array_push($allHeaders, $tokenName, $tokenStatus, $tokenId, $tokenApp);
+		array_push($allHeaders, $tokenName, $tokenId, $tokenApp);
 		$this->headers = $allHeaders;
 
 		$this->exposes = array_map("trim", explode(",", $exposes));
