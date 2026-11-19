@@ -35,7 +35,7 @@ class HeaderService extends AbstractService {
 	#[AsMessageHandler]
 	public function isStatusOk(HeaderMessage\GetStatusMessage $message): bool{
 		$request = $message->getRequest();
-		return $request->headers->get($this->tokenId) == null;
+		return $request->headers->get($this->tokenId) !== null;
 	}
 
 	#[AsMessageHandler]
