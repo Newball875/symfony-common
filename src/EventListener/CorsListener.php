@@ -71,6 +71,7 @@ class CorsListener extends AbstractListener implements EventSubscriberInterface 
 			$this->logError("Origine $origin non autorisée", []);
 		}
 	}
+
 	#[AsEventListener(event: KernelEvents::RESPONSE)]
 	public function onKernelResponse(ResponseEvent $event): void {
 		if(!$this->isActive) return;

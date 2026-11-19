@@ -6,7 +6,7 @@ use Newball\Common\Message\AbstractMessage;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @extends AbstractMessage<?int>
+ * @extends AbstractMessage<int>
  * @method static static message(Request $request)
  */
 readonly class GetIdMessage extends AbstractMessage {

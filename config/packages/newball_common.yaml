@@ -1,6 +1,5 @@
 newball_common:
     header_name: "%env(NB_COMMON_TOKEN_NAME)"
-    header_status: "%env(NB_COMMON_TOKEN_STATUS)%"
     header_user_id: "%env(NB_COMMON_TOKEN_ID)%"
     header_app: "%env(NB_COMMON_TOKEN_APP)%"
 

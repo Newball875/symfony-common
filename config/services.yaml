@@ -4,7 +4,6 @@ services:
         autoconfigure: true
         bind:
             $tokenName: "%header_name%"
-            $tokenStatus: "%header_status%"
             $tokenId: "%header_user_id%"
             $tokenApp: "%header_app%"
 
