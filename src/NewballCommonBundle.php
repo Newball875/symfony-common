@@ -58,7 +58,6 @@ class NewballCommonBundle extends AbstractBundle {
 	public function loadExtension(array $config, ContainerConfigurator $configurator, ContainerBuilder $container): void {
 		$configurator->parameters()
 			->set("header_name", $config["header_name"])
-			->set("header_status", $config["header_status"])
 			->set("header_user_id", $config["header_user_id"])
 			->set("header_app", $config["header_app"])
 			->set("cors_active", $config["cors_active"])
