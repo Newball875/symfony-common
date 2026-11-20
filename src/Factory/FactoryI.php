@@ -7,7 +7,6 @@ use Newball\Common\Entity\Entity;
 use Newball\Common\ValueObject\ValueObjectI;
 
 /**
- * @deprecated 3.0
  * @template T of Entity|ValueObjectI
  * @template DTO of EntityDTO
  */
