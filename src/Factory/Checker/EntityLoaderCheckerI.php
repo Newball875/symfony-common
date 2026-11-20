@@ -2,7 +2,7 @@
 
 use Doctrine\Common\Collections\Collection;
 
-interface EntityLoaderI {
+interface EntityLoaderCheckerI {
 	/**
 	 * Vérifie si la Collection est bien initialisée
 	 *
