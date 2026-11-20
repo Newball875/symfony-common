@@ -12,7 +12,6 @@ use Newball\Common\ValueObject\ValueObjectI;
  * @template T of Entity|ValueObjectI
  * @template DTO of EntityDTO
  * @method DTO static toDTO(T $entity)
- * @method DTO[] static allToDTO(iterable<T> $entities)
  */
 abstract class AbstractFactory implements FactoryI {
 	/**
@@ -39,7 +38,7 @@ abstract class AbstractFactory implements FactoryI {
 
 		$dtos = [];
 		foreach ($entities as $entity){
-			$result[] = static::toDTO($entity);
+			$dtos[] = static::toDTO($entity);
 		}
 		return $dtos;
 	}

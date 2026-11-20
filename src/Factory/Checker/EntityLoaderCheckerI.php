@@ -1,5 +1,7 @@
 <?php
 
+namespace Newball\Common\Factory\Checker;
+
 use Doctrine\Common\Collections\Collection;
 
 interface EntityLoaderCheckerI {
