@@ -15,7 +15,7 @@ trigger_deprecation(
 );
 
 /**
- * @deprecated since newball875/common 2.0, extend AbstractFactory instead
+ * @deprecated since newball875/common 3.0, extend AbstractFactory instead
  * @method EntityDTO static toDTO(Entity $entity, mixed ...$kwargs)
  */
 trait TraitFactory {
