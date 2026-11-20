@@ -2,6 +2,7 @@
 
 namespace Newball\Common\Factory;
 
+use Doctrine\Common\Collections\Collection;
 use Newball\Common\DTO\EntityDTO;
 use Newball\Common\Entity\Entity;
 use Newball\Common\ValueObject\ValueObjectI;
@@ -10,17 +11,36 @@ use Newball\Common\ValueObject\ValueObjectI;
  * Classe qui établit les règles d'une factory entre une entité et un DTO
  * @template T of Entity|ValueObjectI
  * @template DTO of EntityDTO
- * @method DTO static toDTO(T $entity, mixed ...$kwargs)
+ * @method DTO static toDTO(T $entity)
+ * @method DTO[] static allToDTO(iterable<T> $entities)
  */
 abstract class AbstractFactory implements FactoryI {
-	use TraitFactory;
+	/**
+	 * @param Entity|ValueObjectI $entity
+	 * @return EntityDTO
+	 */
+	static abstract public function toDTO(Entity|ValueObjectI $entity): EntityDTO;
 
 	/**
 	 * @param iterable<T> $entities Entités à passer sous DTO
-	 * @param mixed ...$kwargs Paramètres optionnels
 	 * @return DTO[]
 	 */
-	static public function allToDTO(iterable $entities, mixed ...$kwargs): array {
-		return self::mapFromEntities($entities, $kwargs);
+	static public function allToDTO(iterable $entities): array {
+		if($entities instanceof Collection){
+			return $entities->map(fn(Entity|ValueObjectI $entity) => static::toDTO($entity))->getValues();
+		}
+
+		if(is_array($entities)){
+			return array_map(
+				fn(Entity|ValueObjectI $entity) => static::toDTO($entity),
+				$entities
+			);
+		}
+
+		$dtos = [];
+		foreach ($entities as $entity){
+			$result[] = static::toDTO($entity);
+		}
+		return $dtos;
 	}
 }

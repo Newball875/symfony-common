@@ -6,7 +6,16 @@ use Doctrine\Common\Collections\Collection;
 use Newball\Common\DTO\EntityDTO;
 use Newball\Common\Entity\Entity;
 
+trigger_deprecation(
+	"newball875/common",
+	"3.0",
+	"The \"%s\" trait is deprecated and will be remove in 4.0, extend \"%s\" instead.",
+	TraitFactory::class,
+	AbstractFactory::class
+);
+
 /**
+ * @deprecated since newball875/common 2.0, extend AbstractFactory instead
  * @method EntityDTO static toDTO(Entity $entity, mixed ...$kwargs)
  */
 trait TraitFactory {
