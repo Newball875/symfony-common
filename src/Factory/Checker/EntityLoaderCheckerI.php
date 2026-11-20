@@ -13,5 +13,11 @@ interface EntityLoaderCheckerI {
 	 */
 	public static function isCollectionLoaded(Collection $collection): bool;
 
+	/**
+	 * Vérifie si un objet est bien initialisé
+	 *
+	 * @param object|null $entity
+	 * @return boolean
+	 */
 	public static function isRelationLoaded(?object $entity): bool;
 }
