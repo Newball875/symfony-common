@@ -30,7 +30,7 @@ trait TraitControllerMessage {
 	 * @template T
 	 * @template DTO
 	 * @param AbstractMessage<T, DTO> $message
-	 * @return DTO|null
+	 * @return DTO
 	 * @throws Exception
 	 */
 	protected function getMessageResult(AbstractMessage $message): mixed{
@@ -60,7 +60,7 @@ trait TraitControllerMessage {
 				if($resolver){
 					return $resolver->toDTO($result);
 				}
-				return null;
+				throw Exception::badReturn();
 			}else{
 				return $result;
 			}
