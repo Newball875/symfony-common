@@ -10,7 +10,10 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Contracts\Service\Attribute\Required;
 
-trait TraitMessage {
+/**
+ * Trait de gestion des Messages utilisé par les Controllers
+ */
+trait TraitControllerMessage {
 	private MessageBusInterface $bus;
 
 	use TraitResolver;
@@ -24,8 +27,9 @@ trait TraitMessage {
 	/**
 	 * Fonction qui envoie un message et renvoie une réponse
 	 * @template T
-	 * @param AbstractMessage<T> $message
-	 * @return T
+	 * @template DTO
+	 * @param AbstractMessage<T, DTO> $message
+	 * @return DTO
 	 * @throws Exception
 	 */
 	protected function getMessageResult(AbstractMessage $message): mixed{
