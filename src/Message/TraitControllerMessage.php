@@ -45,7 +45,7 @@ trait TraitControllerMessage {
 			if(is_array($result)){
 				$dtos = [];
 				foreach($result as $item){
-					if($item instanceof Entity){
+					if(is_object($item)){
 						$resolver = $this->getResolver($item);
 						if($resolver){
 							$dtos[] = $resolver->toDTO($item);
@@ -55,7 +55,7 @@ trait TraitControllerMessage {
 					}
 				}
 				return $dtos;
-			}else if($result instanceof Entity){
+			}else if(is_object($result)){
 				$resolver = $this->getResolver($result);
 				if($resolver){
 					return $resolver->toDTO($result);
