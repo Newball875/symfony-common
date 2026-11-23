@@ -33,7 +33,10 @@ final class ApiReponse {
 	 * @param int $code
 	 * @return JsonResponse
 	 */
-	static public function success($data, int $code = 200): JsonResponse{
+	static public function success(mixed $data, int $code = 200): JsonResponse{
+		if($data === null){
+			$code = 204;
+		}
 		$response = new JsonResponse($data, $code);
 		$response->setEncodingOptions(JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 		return $response;
