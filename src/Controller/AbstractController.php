@@ -6,7 +6,7 @@ use Newball\Common\DTO\EntityDTO;
 use Newball\Common\Exception\Exception;
 use Newball\Common\Log\LoggerI;
 use Newball\Common\Log\TraitLogger;
-use Newball\Common\Message\TraitMessage;
+use Newball\Common\Message\TraitControllerMessage;
 use Newball\Common\Resolver\TraitResolver;
 use Newball\Common\Service\ApiReponse;
 
@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyContr
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController extends SymfonyController implements LoggerI {
-	use TraitMessage;
+	use TraitControllerMessage;
 	use TraitLogger;
 	use TraitResolver;
 

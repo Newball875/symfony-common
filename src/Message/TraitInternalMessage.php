@@ -12,7 +12,7 @@ use Symfony\Contracts\Service\Attribute\Required;
 /**
  * Trait de gestion des Messages utilisé en interne (Services, Handlers, etc)
  */
-trait TraitControllerMessage {
+trait TraitInternalMessage {
 	private MessageBusInterface $bus;
 
 	use TraitLogger;
