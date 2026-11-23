@@ -2,6 +2,7 @@
 
 namespace Newball\Common\Message;
 
+use Newball\Common\Entity\Entity;
 use Newball\Common\Exception\Exception;
 use Newball\Common\Log\TraitLogger;
 use Newball\Common\Resolver\TraitResolver;
@@ -29,7 +30,7 @@ trait TraitControllerMessage {
 	 * @template T
 	 * @template DTO
 	 * @param AbstractMessage<T, DTO> $message
-	 * @return DTO
+	 * @return DTO|null
 	 * @throws Exception
 	 */
 	protected function getMessageResult(AbstractMessage $message): mixed{
@@ -40,7 +41,29 @@ trait TraitControllerMessage {
 				throw Exception::noHandler(message: sprintf("Aucun handler pour le message: %s", $message::class));
 			}
 
-			return $handleStamp->getResult();
+			$result = $handleStamp->getResult();
+			if(is_array($result)){
+				$dtos = [];
+				foreach($result as $item){
+					if($item instanceof Entity){
+						$resolver = $this->getResolver($item);
+						if($resolver){
+							$dtos[] = $resolver->toDTO($item);
+						}
+					}else{
+						$dtos[] = $item;
+					}
+				}
+				return $dtos;
+			}else if($result instanceof Entity){
+				$resolver = $this->getResolver($result);
+				if($resolver){
+					return $resolver->toDTO($result);
+				}
+				return null;
+			}else{
+				return $result;
+			}
 		}catch(Exception $e){
 			throw $e;
 		}catch(HandlerFailedException $hfe){
