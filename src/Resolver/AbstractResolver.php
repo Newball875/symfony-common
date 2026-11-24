@@ -12,7 +12,7 @@ use Newball\Common\Repository\RepositoryI;
  * @template DTO of EntityDTO
  */
 abstract class AbstractResolver {
-	private RepositoryI $rep;
+	protected RepositoryI $rep;
 
 	public function __construct(RepositoryI $rep){
 		$this->rep = $rep;
