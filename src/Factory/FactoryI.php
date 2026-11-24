@@ -13,13 +13,15 @@ use Newball\Common\ValueObject\ValueObjectI;
 interface FactoryI {
 	/**
 	 * @param T $entity
+	 * @param MappingContext $context
 	 * @return DTO
 	 */
-	static public function toDTO(Entity|ValueObjectI $entity): EntityDTO;
+	static public function toDTO(Entity|ValueObjectI $entity, MappingContext $context): EntityDTO;
 
 	/**
 	 * @param iterable<T> $entities
+	 * @param MappingContext $context
 	 * @return DTO[]
 	 */
-	static public function allToDTO(iterable $entities): array;
+	static public function allToDTO(iterable $entities, MappingContext $context): array;
 }
