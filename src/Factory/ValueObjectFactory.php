@@ -3,6 +3,8 @@
 namespace Newball\Common\Factory;
 
 use Newball\Common\DTO\ValueObjectDTO;
+use Newball\Common\Exception\Exception;
+use Newball\Common\Exception\ExceptionCode;
 use Newball\Common\ValueObject\ValueObjectI;
 
 /**
@@ -19,5 +21,9 @@ class ValueObjectFactory extends AbstractFactory {
 			value: $entity->getValue(),
 			label: $entity->getLabel()
 		);
+	}
+
+	protected static function createContext(): FactoryContext {
+		throw new Exception("Aucun context pour cette Factory", 500, ExceptionCode::NOT_REGISTERED);
 	}
 }
