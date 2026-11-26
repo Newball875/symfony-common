@@ -11,16 +11,13 @@ use Newball\Common\ValueObject\ValueObjectI;
  * Classe qui établit les règles d'une factory entre une entité et un DTO
  * @template T of Entity|ValueObjectI
  * @template DTO of DTOI
+ * @template Context of FactoryContext
+ * @method static DTO toDTO(T $entity, ?Context $context = null)
  */
 abstract class AbstractFactory {
 	/**
-	 * @param T $entity
-	 * @return DTO
-	 */
-	static abstract public function toDTO(Entity|ValueObjectI $entity, ?FactoryContext $context = null): DTOI;
-
-	/**
 	 * @param iterable<T> $entities Entités à passer sous DTO
+	 * @param Context $context
 	 * @return DTO[]
 	 */
 	static public function allToDTO(iterable $entities, ?FactoryContext $context = null): array {
