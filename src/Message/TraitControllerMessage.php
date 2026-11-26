@@ -2,7 +2,6 @@
 
 namespace Newball\Common\Message;
 
-use Newball\Common\Entity\Entity;
 use Newball\Common\Exception\Exception;
 use Newball\Common\Log\TraitLogger;
 use Newball\Common\Resolver\TraitResolver;
@@ -28,12 +27,11 @@ trait TraitControllerMessage {
 	/**
 	 * Fonction qui envoie un message et renvoie une réponse
 	 * @template T
-	 * @template DTO
-	 * @param AbstractMessage<T, DTO> $message
-	 * @return DTO
+	 * @param DTOMessage<T> $message
+	 * @return T
 	 * @throws Exception
 	 */
-	protected function getMessageResult(AbstractMessage $message): mixed{
+	protected function getMessageResult(DTOMessage $message): mixed{
 		try{
 			$enveloppe = $this->bus->dispatch($message);
 			$handleStamp = $enveloppe->last(HandledStamp::class);
@@ -41,29 +39,7 @@ trait TraitControllerMessage {
 				throw Exception::noHandler(message: sprintf("Aucun handler pour le message: %s", $message::class));
 			}
 
-			$result = $handleStamp->getResult();
-			if(is_array($result)){
-				$dtos = [];
-				foreach($result as $item){
-					if(is_object($item)){
-						$resolver = $this->getResolver($item);
-						if($resolver){
-							$dtos[] = $resolver->toDTO($item);
-						}
-					}else{
-						$dtos[] = $item;
-					}
-				}
-				return $dtos;
-			}else if(is_object($result)){
-				$resolver = $this->getResolver($result);
-				if($resolver){
-					return $resolver->toDTO($result);
-				}
-				throw Exception::badReturn();
-			}else{
-				return $result;
-			}
+			return $handleStamp->getResult();
 		}catch(Exception $e){
 			throw $e;
 		}catch(HandlerFailedException $hfe){

@@ -4,7 +4,6 @@ namespace Newball\Common\Message;
 
 /**
  * @template T
- * @template DTO
  */
 readonly abstract class AbstractMessage {
 	protected function __construct(){}

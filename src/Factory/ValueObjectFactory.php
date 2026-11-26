@@ -14,7 +14,7 @@ class ValueObjectFactory extends AbstractFactory {
 	 * @param ValueObjectI $entity
 	 * @return ValueObjectDTO
 	 */
-	public static function toDTO($entity): ValueObjectDTO {
+	public static function toDTO($entity, ?FactoryContext $context = null): ValueObjectDTO {
 		return new ValueObjectDTO(
 			value: $entity->getValue(),
 			label: $entity->getLabel()

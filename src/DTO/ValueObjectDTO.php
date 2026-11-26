@@ -2,7 +2,7 @@
 
 namespace Newball\Common\DTO;
 
-readonly class ValueObjectDTO extends EntityDTO {
+readonly class ValueObjectDTO implements DTOI {
 	public mixed $value;
 	public string $label;
 

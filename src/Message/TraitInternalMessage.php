@@ -25,12 +25,11 @@ trait TraitInternalMessage {
 	/**
 	 * Fonction qui envoie un message et renvoie une réponse
 	 * @template T
-	 * @template DTO
-	 * @param AbstractMessage<T, DTO> $message
+	 * @param DomainMessage<T> $message
 	 * @return T
 	 * @throws Exception
 	 */
-	protected function getMessageResult(AbstractMessage $message): mixed{
+	protected function getMessageResult(DomainMessage $message): mixed{
 		try{
 			$enveloppe = $this->bus->dispatch($message);
 			$handleStamp = $enveloppe->last(HandledStamp::class);
