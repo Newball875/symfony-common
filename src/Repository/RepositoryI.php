@@ -12,11 +12,11 @@ interface RepositoryI {
 	 * @param integer $id
 	 * @return T|null
 	 */
-	public function findById(int $id, array $includes): ?Entity;
+	public function findById(int $id): ?Entity;
 
 	/**
 	 * @param int[] $ids
 	 * @return T[]
 	 */
-	public function findByIds(array $ids, array $includes): array;
+	public function findByIds(array $ids): array;
 }
