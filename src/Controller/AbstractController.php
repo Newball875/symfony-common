@@ -2,12 +2,11 @@
 
 namespace Newball\Common\Controller;
 
-use Newball\Common\DTO\EntityDTO;
+use Newball\Common\DTO\DTOI;
 use Newball\Common\Exception\Exception;
 use Newball\Common\Log\LoggerI;
 use Newball\Common\Log\TraitLogger;
 use Newball\Common\Message\TraitControllerMessage;
-use Newball\Common\Resolver\TraitResolver;
 use Newball\Common\Service\ApiReponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyController;
@@ -16,15 +15,14 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class AbstractController extends SymfonyController implements LoggerI {
 	use TraitControllerMessage;
 	use TraitLogger;
-	use TraitResolver;
 
 	/**
 	 * Fonction de succès qui retourne les données au format défini
-	 * @param string|EntityDTO|iterable<EntityDTO> $data Données à renvoyer
+	 * @param string|DTOI|iterable<DTOI> $data Données à renvoyer
 	 * @param int $code => Code de la réponse (200 de base)
 	 * @return Response
 	 */
-	protected function success(EntityDTO|string|array|null $data, int $code = 200): Response{
+	protected function success(DTOI|string|array|null $data, int $code = 200): Response{
 		return ApiReponse::success($data, $code);
 	}
 

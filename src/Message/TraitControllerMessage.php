@@ -4,7 +4,6 @@ namespace Newball\Common\Message;
 
 use Newball\Common\Exception\Exception;
 use Newball\Common\Log\TraitLogger;
-use Newball\Common\Resolver\TraitResolver;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
@@ -16,7 +15,6 @@ use Symfony\Contracts\Service\Attribute\Required;
 trait TraitControllerMessage {
 	private MessageBusInterface $bus;
 
-	use TraitResolver;
 	use TraitLogger;
 
 	#[Required]
