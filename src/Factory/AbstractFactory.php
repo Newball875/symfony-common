@@ -38,4 +38,6 @@ abstract class AbstractFactory {
 		}
 		return $dtos;
 	}
+
+	abstract static protected function createContext(): FactoryContext;
 }
